@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
+import Modal from "./Modal";
 
 const PostList: React.FC = () => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
@@ -19,10 +20,12 @@ const PostList: React.FC = () => {
 
   return (
     <>
-      <NewPost
-        onAuthorChange={handleAuthorChange}
-        onBodyChange={handleBodyChange}
-      />
+      <Modal>
+        <NewPost
+          onAuthorChange={handleAuthorChange}
+          onBodyChange={handleBodyChange}
+        />
+      </Modal>
       <ul className={classes.posts}>
         <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Paul" body="Hi, there!" />

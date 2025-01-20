@@ -17,24 +17,22 @@ const NewPost: React.FC<NewPostProps> = ({ onBodyChange, onAuthorChange }) => {
 
   return (
     <form className={classes.form}>
+      <label htmlFor="body">Text</label>
       <p>
-        <label htmlFor="body">Text</label>
-        <p>
-          <label htmlFor="name">Your name</label>
-          <input
-            type="text"
-            id="name"
-            required
-            onChange={(event) => authorChangeHandler(event.target.value)}
-          />
-        </p>
-        <textarea
-          id="body"
+        <label htmlFor="name">Your name</label>
+        <input
+          type="text"
+          id="name"
           required
-          rows={3}
-          onChange={(event) => bodyChangeHandler(event.target.value)}
+          onChange={(event) => authorChangeHandler(event.target.value)}
         />
       </p>
+      <textarea
+        id="body"
+        required
+        rows={3}
+        onChange={(event) => bodyChangeHandler(event.target.value)}
+      />
     </form>
   );
 };
