@@ -1,22 +1,34 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
+import NewPost from "./NewPost";
 
-type Props = {};
+const PostList: React.FC = () => {
+  const [enteredAuthor, setEnteredAuthor] = useState("");
+  const [enteredBody, setEnteredBody] = useState("");
 
-type State = {};
-
-export default class PostList extends Component<Props, State> {
-  state = {
-    posts: [],
+  const handleAuthorChange = (author: string) => {
+    console.log("Author updated:", author);
+    setEnteredAuthor(author);
   };
 
-  render() {
-    return (
+  const handleBodyChange = (body: string) => {
+    console.log("Body content updated:", body);
+    setEnteredBody(body);
+  };
+
+  return (
+    <>
+      <NewPost
+        onAuthorChange={handleAuthorChange}
+        onBodyChange={handleBodyChange}
+      />
       <ul className={classes.posts}>
-        <Post author="John" body="Hello, world!" />
+        <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Paul" body="Hi, there!" />
       </ul>
-    );
-  }
-}
+    </>
+  );
+};
+
+export default PostList;
