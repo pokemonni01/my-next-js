@@ -5,8 +5,13 @@ import NewPost from "./NewPost";
 import Modal from "./Modal";
 
 const PostList: React.FC = () => {
+  const [modalisVisable, setModalisVisable] = useState(true);
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setEnteredBody] = useState("");
+
+  const hideModalHandler = () => {
+    setModalisVisable(false);
+  };
 
   const handleAuthorChange = (author: string) => {
     console.log("Author updated:", author);
@@ -18,14 +23,22 @@ const PostList: React.FC = () => {
     setEnteredBody(body);
   };
 
-  return (
-    <>
-      <Modal>
+  let modalContent;
+
+  if (modalisVisable) {
+    modalContent = (
+      <Modal onClose={hideModalHandler}>
         <NewPost
           onAuthorChange={handleAuthorChange}
           onBodyChange={handleBodyChange}
         />
       </Modal>
+    );
+  }
+
+  return (
+    <>
+      {modalContent}
       <ul className={classes.posts}>
         <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Paul" body="Hi, there!" />
