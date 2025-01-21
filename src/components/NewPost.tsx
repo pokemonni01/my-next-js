@@ -1,27 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./NewPost.module.css";
 
 interface NewPostProps {
-  onAuthorChange: (author: string) => void;
-  onBodyChange: (body: string) => void;
   onCancel: () => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({
-  onBodyChange,
-  onAuthorChange,
-  onCancel,
-}) => {
+const NewPost: React.FC<NewPostProps> = ({ onCancel }) => {
+  const [enteredAuthor, setEnteredAuthor] = useState("");
+  const [enteredBody, setEnteredBody] = useState("");
+
   const authorChangeHandler = (params: string) => {
-    onAuthorChange(params);
+    setEnteredAuthor(params);
   };
 
   const bodyChangeHandler = (params: string) => {
-    onBodyChange(params);
+    setEnteredBody(params);
+  };
+
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const postData = {
+      body: enteredBody,
+      author: enteredAuthor,
+    };
+    console.log(postData);
+    onCancel();
   };
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <label htmlFor="body">Text</label>
       <p>
         <label htmlFor="name">Your name</label>
