@@ -4,9 +4,14 @@ import classes from "./NewPost.module.css";
 interface NewPostProps {
   onAuthorChange: (author: string) => void;
   onBodyChange: (body: string) => void;
+  onCancel: () => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({ onBodyChange, onAuthorChange }) => {
+const NewPost: React.FC<NewPostProps> = ({
+  onBodyChange,
+  onAuthorChange,
+  onCancel,
+}) => {
   const authorChangeHandler = (params: string) => {
     onAuthorChange(params);
   };
@@ -33,6 +38,12 @@ const NewPost: React.FC<NewPostProps> = ({ onBodyChange, onAuthorChange }) => {
         rows={3}
         onChange={(event) => bodyChangeHandler(event.target.value)}
       />
+      <p className={classes.actions}>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button>Submit</button>
+      </p>
     </form>
   );
 };

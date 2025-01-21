@@ -9,7 +9,7 @@ interface PostListProps {
   onStopPosting: () => void;
 }
 
-const PostList: React.FC<PostListProps> = (props: PostListProps) => {
+const PostList: React.FC<PostListProps> = ({ isPosting, onStopPosting }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setEnteredBody] = useState("");
 
@@ -38,11 +38,12 @@ const PostList: React.FC<PostListProps> = (props: PostListProps) => {
 
   return (
     <>
-      {props.isPosting && (
-        <Modal onClose={props.onStopPosting}>
+      {isPosting && (
+        <Modal onClose={onStopPosting}>
           <NewPost
             onAuthorChange={handleAuthorChange}
             onBodyChange={handleBodyChange}
+            onCancel={onStopPosting}
           />
         </Modal>
       )}
