@@ -10,11 +10,17 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ isPosting, onStopPosting }) => {
+  const [posts, setPosts] = useState<{ author: string; body: string }[]>([]);
+
+  const addPostHandler = (postData: { author: string; body: string }) => {
+    setPosts((existingPosts) => [postData, ...existingPosts]);
+  };
+
   return (
     <>
       {isPosting && (
         <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} />
+          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
         </Modal>
       )}
       <ul className={classes.posts}>

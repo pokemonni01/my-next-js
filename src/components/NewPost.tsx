@@ -3,9 +3,10 @@ import classes from "./NewPost.module.css";
 
 interface NewPostProps {
   onCancel: () => void;
+  onAddPost: (postData: { author: string; body: string }) => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({ onCancel }) => {
+const NewPost: React.FC<NewPostProps> = ({ onCancel, onAddPost }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setEnteredBody] = useState("");
 
@@ -23,7 +24,7 @@ const NewPost: React.FC<NewPostProps> = ({ onCancel }) => {
       body: enteredBody,
       author: enteredAuthor,
     };
-    console.log(postData);
+    onAddPost(postData);
     onCancel();
   };
 
