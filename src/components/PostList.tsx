@@ -4,14 +4,14 @@ import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 
-const PostList: React.FC = () => {
-  const [modalisVisable, setModalisVisable] = useState(true);
+interface PostListProps {
+  isPosting: boolean;
+  onStopPosting: () => void;
+}
+
+const PostList: React.FC<PostListProps> = (props: PostListProps) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setEnteredBody] = useState("");
-
-  const hideModalHandler = () => {
-    setModalisVisable(false);
-  };
 
   const handleAuthorChange = (author: string) => {
     console.log("Author updated:", author);
@@ -23,22 +23,29 @@ const PostList: React.FC = () => {
     setEnteredBody(body);
   };
 
-  let modalContent;
+  //   let modalContent;
 
-  if (modalisVisable) {
-    modalContent = (
-      <Modal onClose={hideModalHandler}>
-        <NewPost
-          onAuthorChange={handleAuthorChange}
-          onBodyChange={handleBodyChange}
-        />
-      </Modal>
-    );
-  }
+  //   if (modalisVisable) {
+  //     modalContent = (
+  //       <Modal onClose={hideModalHandler}>
+  //         <NewPost
+  //           onAuthorChange={handleAuthorChange}
+  //           onBodyChange={handleBodyChange}
+  //         />
+  //       </Modal>
+  //     );
+  //   }
 
   return (
     <>
-      {modalContent}
+      {props.isPosting && (
+        <Modal onClose={props.onStopPosting}>
+          <NewPost
+            onAuthorChange={handleAuthorChange}
+            onBodyChange={handleBodyChange}
+          />
+        </Modal>
+      )}
       <ul className={classes.posts}>
         <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Paul" body="Hi, there!" />
