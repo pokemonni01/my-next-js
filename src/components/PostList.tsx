@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 import NewPost from "./NewPost";
@@ -12,7 +12,23 @@ interface PostListProps {
 const PostList: React.FC<PostListProps> = ({ isPosting, onStopPosting }) => {
   const [posts, setPosts] = useState<{ author: string; body: string }[]>([]);
 
+  useEffect(() => {
+    async function fetchPost() {
+      const response = await fetch("http://localhost:8080/posts");
+      const resData = await response.json();
+      setPosts(resData.posts);
+    }
+    fetchPost();
+  }, []);
+
   const addPostHandler = (postData: { author: string; body: string }) => {
+    fetch("http://localhost:8080/posts", {
+      method: "POST",
+      body: JSON.stringify(postData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     setPosts((existingPosts) => [postData, ...existingPosts]);
   };
 
