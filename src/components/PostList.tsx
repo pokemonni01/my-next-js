@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
-import NewPost from "./NewPost";
-import Modal from "./Modal";
 
-interface PostListProps {
-  isPosting: boolean;
-  onStopPosting: () => void;
-}
-
-const PostList: React.FC<PostListProps> = ({ isPosting, onStopPosting }) => {
+const PostList: React.FC = () => {
   const [posts, setPosts] = useState<{ author: string; body: string }[]>([]);
   const [isFetching, setIsFetching] = useState(false);
 
@@ -37,11 +30,6 @@ const PostList: React.FC<PostListProps> = ({ isPosting, onStopPosting }) => {
 
   return (
     <>
-      {isPosting && (
-        <Modal onClose={onStopPosting}>
-          <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-        </Modal>
-      )}
       {!isFetching && posts.length > 0 && (
         <ul className={classes.posts}>
           {posts.map((post, index) => (

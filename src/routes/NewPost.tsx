@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./NewPost.module.css";
+import Modal from "../components/Modal";
 
 interface NewPostProps {
   onCancel: () => void;
@@ -29,30 +30,32 @@ const NewPost: React.FC<NewPostProps> = ({ onCancel, onAddPost }) => {
   };
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <label htmlFor="body">Text</label>
-      <p>
-        <label htmlFor="name">Your name</label>
-        <input
-          type="text"
-          id="name"
+    <Modal onCancel={onCancel}>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <label htmlFor="body">Text</label>
+        <p>
+          <label htmlFor="name">Your name</label>
+          <input
+            type="text"
+            id="name"
+            required
+            onChange={(event) => authorChangeHandler(event.target.value)}
+          />
+        </p>
+        <textarea
+          id="body"
           required
-          onChange={(event) => authorChangeHandler(event.target.value)}
+          rows={3}
+          onChange={(event) => bodyChangeHandler(event.target.value)}
         />
-      </p>
-      <textarea
-        id="body"
-        required
-        rows={3}
-        onChange={(event) => bodyChangeHandler(event.target.value)}
-      />
-      <p className={classes.actions}>
-        <button type="button" onClick={onCancel}>
-          Cancel
-        </button>
-        <button>Submit</button>
-      </p>
-    </form>
+        <p className={classes.actions}>
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+          <button>Submit</button>
+        </p>
+      </form>
+    </Modal>
   );
 };
 
