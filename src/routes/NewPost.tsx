@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import classes from "./NewPost.module.css";
 import Modal from "../components/Modal";
+import { Link } from "react-router-dom";
 
 interface NewPostProps {
-  onCancel: () => void;
   onAddPost: (postData: { author: string; body: string }) => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({ onCancel, onAddPost }) => {
+const NewPost: React.FC<NewPostProps> = ({ onAddPost }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setEnteredBody] = useState("");
 
@@ -30,7 +30,7 @@ const NewPost: React.FC<NewPostProps> = ({ onCancel, onAddPost }) => {
   };
 
   return (
-    <Modal onCancel={onCancel}>
+    <Modal>
       <form className={classes.form} onSubmit={submitHandler}>
         <label htmlFor="body">Text</label>
         <p>
@@ -49,9 +49,9 @@ const NewPost: React.FC<NewPostProps> = ({ onCancel, onAddPost }) => {
           onChange={(event) => bodyChangeHandler(event.target.value)}
         />
         <p className={classes.actions}>
-          <button type="button" onClick={onCancel}>
+          <Link type="button" to="..">
             Cancel
-          </button>
+          </Link>
           <button>Submit</button>
         </p>
       </form>
