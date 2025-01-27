@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Post from "./Post";
 import classes from "./PostList.module.css";
 import { useLoaderData } from "react-router-dom";
 
-const PostList: React.FC = () => {
-  const posts = useLoaderData();
+interface Post {
+  author: string;
+  body: string;
+}
 
-  const addPostHandler = (postData: { author: string; body: string }) => {
-    fetch("http://localhost:8080/posts", {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setPosts((existingPosts) => [postData, ...existingPosts]);
-  };
+const PostList: React.FC = () => {
+  const posts = useLoaderData<Post[]>();
 
   return (
     <>

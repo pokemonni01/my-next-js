@@ -1,62 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./NewPost.module.css";
 import Modal from "../components/Modal";
-import { Link } from "react-router-dom";
+import { Link, Form, ActionFunction, redirect } from "react-router-dom";
 
-interface NewPostProps {
-  onAddPost: (postData: { author: string; body: string }) => void;
-}
-
-const NewPost: React.FC<NewPostProps> = ({ onAddPost }) => {
-  const [enteredAuthor, setEnteredAuthor] = useState("");
-  const [enteredBody, setEnteredBody] = useState("");
-
-  const authorChangeHandler = (params: string) => {
-    setEnteredAuthor(params);
-  };
-
-  const bodyChangeHandler = (params: string) => {
-    setEnteredBody(params);
-  };
-
-  const submitHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    const postData = {
-      body: enteredBody,
-      author: enteredAuthor,
-    };
-    onAddPost(postData);
-    onCancel();
-  };
-
+const NewPost: React.FC = () => {
   return (
     <Modal>
-      <form className={classes.form} onSubmit={submitHandler}>
-        <label htmlFor="body">Text</label>
+      <Form method="post" className={classes.form}>
         <p>
           <label htmlFor="name">Your name</label>
-          <input
-            type="text"
-            id="name"
-            required
-            onChange={(event) => authorChangeHandler(event.target.value)}
-          />
+          <input type="text" id="name" name="name" required />
         </p>
-        <textarea
-          id="body"
-          required
-          rows={3}
-          onChange={(event) => bodyChangeHandler(event.target.value)}
-        />
+        <p>
+          <label htmlFor="body">Text</label>
+          <textarea id="body" name="body" required rows={3} />
+        </p>
         <p className={classes.actions}>
           <Link type="button" to="..">
             Cancel
           </Link>
           <button>Submit</button>
         </p>
-      </form>
+      </Form>
     </Modal>
   );
 };
 
 export default NewPost;
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+  const postData = Object.fromEntries(formData) as Record<string, string>;
+  await fetch("http://localhost:8080/posts", {
+    method: "POST",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return redirect("/");
+};
