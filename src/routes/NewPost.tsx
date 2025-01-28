@@ -9,7 +9,7 @@ const NewPost: React.FC = () => {
       <Form method="post" className={classes.form}>
         <p>
           <label htmlFor="name">Your name</label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="name" name="author" required />
         </p>
         <p>
           <label htmlFor="body">Text</label>
